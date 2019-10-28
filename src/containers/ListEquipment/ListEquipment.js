@@ -10,6 +10,8 @@ import { createStyles, Theme, makeStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
 import * as actions from '../../actions'
 import _ from 'lodash'
+import SearchEquipment from '../../components/SearchEquipment/SearchEquipment'
+import { useInfiniteScroll } from '../../hooks/useInfiniteScroll'
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -19,23 +21,32 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 )
 
-const ListEquipment = (props) => {
-    const [equipment, setEquipment] = useState([])
+const ListEquipment = props => {
+    let infiniteScroll = useInfiniteScroll()
+    const [equipments, setEquipments] = useState([])
     const [isLoading, setIsLoading] = useState(false)
+    const [title, setTitle] = useState(['name', 'domain', 'nbFaults', 'photo'])
 
     const classes = useStyles()
 
     useEffect(() => {
-        getEquipment()
-    }, [])
-
-    const getEquipment = () => {
         setIsLoading(true)
         props.fetchEquipments()
-    }
+    }, [])
 
-    const renderEquipement = () => {
-        const equipments = _.map(props.equipment.Equipments, (equipment, key) => {
+    useEffect(() => {
+        setEquipments(props.equipment.Equipments)
+        return () => {
+            setIsLoading(false)
+        }
+    }, [props.equipment])
+
+    // const renderHeadEquipment = () => {
+    //
+    // }
+
+    const renderBodyEquipement = () => {
+        const data = _.map(equipments, (equipment, key) => {
             return (
                 <ItemEquipment
                     key={key}
@@ -45,18 +56,19 @@ const ListEquipment = (props) => {
                     photo={equipment.photo}
                 />
             )
-        })
-        if (!_.isEmpty(equipments)) {
-            return equipments
+        }).slice(0, infiniteScroll)
+        if (!_.isEmpty(data)) {
+            return data
         }
-        return <TableRow><TableCell><h4>No equipments</h4></TableCell></TableRow>
+        return <TableRow><TableCell>{isLoading ? <CircularProgress className={classes.progress} /> : <h4>No equipments</h4>}</TableCell></TableRow>
     }
 
     return (
         <div>
+            <SearchEquipment />
             <Table>
                 <TableBody>
-                    {renderEquipement()}
+                    {renderBodyEquipement()}
                 </TableBody>
             </Table>
         </div>
