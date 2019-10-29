@@ -5,6 +5,7 @@ import Divider from '@material-ui/core/Divider'
 import IconButton from '@material-ui/core/IconButton'
 import SearchIcon from '@material-ui/icons/Search'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
+import _ from 'lodash'
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -30,15 +31,32 @@ const useStyles = makeStyles(() =>
         }
     })
 )
-
+let search = null
 const SearchEquipment = props => {
-    const search = e => {
-        console.log(e)
+    const searchValue = e => {
+        e.stopPropagation()
+
+        clearTimeout(search)
+        const match = e.target.value
+        search = setTimeout(() => {
+            const data = _.filter(props.equipments, (item, key) => {
+                // console.log(Object.entries(item).filter(value => value[0] === 'domain' || value[0] === 'name'))
+                if (match !== '') {
+                    return Object.values(item).map(value => {
+                        return String(value)
+                    }).find(value => {
+                        return value.toLowerCase().includes(match)
+                    })
+                }
+                return item
+            })
+            props.getEquipments(data)
+        }, 1000)
     }
     const classes = useStyles()
     return (
         <Paper className={classes.root} elevation={1}>
-            <InputBase className={classes.input} placeholder="Search..." onChange={search} />
+            <InputBase className={classes.input} placeholder="Search..." onChange={searchValue} />
             <Divider className={classes.divider} />
             <IconButton className={classes.iconButton} aria-label="Search">
                 <SearchIcon />

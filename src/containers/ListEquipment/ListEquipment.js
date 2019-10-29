@@ -25,7 +25,7 @@ const ListEquipment = props => {
     let infiniteScroll = useInfiniteScroll()
     const [equipments, setEquipments] = useState([])
     const [isLoading, setIsLoading] = useState(false)
-    const [title, setTitle] = useState(['name', 'domain', 'nbFaults', 'photo'])
+    const title = { name: "Nom de l'équipement", domain: "Domaine technique", nbFaults: "Nombre de défauts sur l'équipement", photo: "Photo de l'équipement" }
 
     const classes = useStyles()
 
@@ -41,10 +41,6 @@ const ListEquipment = props => {
         }
     }, [props.equipment])
 
-    // const renderHeadEquipment = () => {
-    //
-    // }
-
     const renderBodyEquipement = () => {
         const data = _.map(equipments, (equipment, key) => {
             return (
@@ -54,6 +50,7 @@ const ListEquipment = props => {
                     domain={equipment.domain}
                     nbFaults={equipment.nbFaults}
                     photo={equipment.photo}
+                    isUrlPhoto
                 />
             )
         }).slice(0, infiniteScroll)
@@ -63,10 +60,22 @@ const ListEquipment = props => {
         return <TableRow><TableCell>{isLoading ? <CircularProgress className={classes.progress} /> : <h4>No equipments</h4>}</TableCell></TableRow>
     }
 
+    const getEquipments = (equipments) => {
+        setEquipments(equipments)
+    }
+
     return (
         <div>
-            <SearchEquipment />
+            <SearchEquipment equipments={props.equipment.Equipments} getEquipments={getEquipments} />
             <Table>
+                <TableHead>
+                    <ItemEquipment
+                        name={title.name}
+                        domain={title.domain}
+                        nbFaults={title.nbFaults}
+                        photo={title.photo}
+                    />
+                </TableHead>
                 <TableBody>
                     {renderBodyEquipement()}
                 </TableBody>

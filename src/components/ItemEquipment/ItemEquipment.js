@@ -9,7 +9,7 @@ const ItemEquipment = props => {
             <TableCell>{props.name}</TableCell>
             <TableCell>{props.domain}</TableCell>
             <TableCell>{props.nbFaults}</TableCell>
-            <TableCell><img src={props.photo} alt="img beeldi" className="img-beeldi" /></TableCell>
+            <TableCell>{props.isUrlPhoto ? <img src={props.photo} alt="img beeldi" className="img-beeldi" /> : props.photo}</TableCell>
         </TableRow>
     )
 }
