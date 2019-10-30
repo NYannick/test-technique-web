@@ -1,0 +1,23 @@
+.container {
+    display: flex;
+    .img-beeldi-detail {
+        width: 300px;
+    }
+    .text-container {
+        padding: 0 20px;
+    }
+    .bold {
+        font-weight: 600;
+    }
+    .p-flex-column {
+        display: flex;
+        flex-direction: column;
+    }
+    .marginBottom {
+        margin-bottom: 16px;
+    }
+    .img-container {
+        display: flex;
+        align-items: center;
+    }
+}

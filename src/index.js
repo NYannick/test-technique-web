@@ -8,6 +8,8 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import EquipmentById from './components/EquipmentById/EquipmentById'
 
 const store = createStore(
     reducers,
@@ -17,7 +19,14 @@ const store = createStore(
 
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <Router>
+            <div style={{ padding: 50 }}>
+                <Switch>
+                    <Route path="/" component={App} exact />
+                    <Route path="/:id"><EquipmentById /></Route>
+                </Switch>
+            </div>
+        </Router>
     </Provider>,
     document.getElementById('root')
 );

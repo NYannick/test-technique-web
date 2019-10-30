@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         progress: {
             margin: theme.spacing(2)
+        },
+        head: {
+            fontWeight: 600
         }
     })
 )
@@ -46,11 +49,11 @@ const ListEquipment = props => {
             return (
                 <ItemEquipment
                     key={key}
+                    id={key}
                     name={equipment.name}
                     domain={equipment.domain}
                     nbFaults={equipment.nbFaults}
                     photo={equipment.photo}
-                    isUrlPhoto
                 />
             )
         }).slice(0, infiniteScroll)
@@ -69,12 +72,12 @@ const ListEquipment = props => {
             <SearchEquipment equipments={props.equipment.Equipments} getEquipments={getEquipments} />
             <Table>
                 <TableHead>
-                    <ItemEquipment
-                        name={title.name}
-                        domain={title.domain}
-                        nbFaults={title.nbFaults}
-                        photo={title.photo}
-                    />
+                    <TableRow>
+                        <TableCell classes={{ head: classes.head }}>{title.name}</TableCell>
+                        <TableCell classes={{ head: classes.head }}>{title.domain}</TableCell>
+                        <TableCell classes={{ head: classes.head }}>{title.nbFaults}</TableCell>
+                        <TableCell classes={{ head: classes.head }}>{title.photo}</TableCell>
+                    </TableRow>
                 </TableHead>
                 <TableBody>
                     {renderBodyEquipement()}
