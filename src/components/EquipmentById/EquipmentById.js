@@ -5,13 +5,19 @@ import * as actions from '../../actions'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
+import ArrowBack from '@material-ui/icons/ArrowBack';
 import _ from 'lodash'
+import Button from '@material-ui/core/Button'
+import { Link } from 'react-router-dom'
 import './EquipmentById.scss'
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         progress: {
             margin: theme.spacing(2)
+        },
+        button: {
+            margin: theme.spacing(1)
         }
     })
 )
@@ -57,10 +63,24 @@ const EquipmentById = props => {
                 )
             }
         })
-        if (!_.isEmpty(data)) {
-            return data
-        }
-        return <div>{isLoading ? <CircularProgress className={classes.progress} /> : <h4>No equipment available</h4>}</div>
+        return (
+            <div className="container-btn-data">
+                <Button
+                    variant="contained"
+                    className={classes.button}
+                    startIcon={<ArrowBack />}
+                >
+                    <Link to="/">Retour</Link>
+                </Button>
+                {
+                    isLoading
+                        ? <CircularProgress className={classes.progress} />
+                        : !_.isEmpty(data)
+                            ? data
+                            : <h4>No equipment available</h4>
+                }
+            </div>
+        )
     }
 
     return renderEquipment()

@@ -64,7 +64,9 @@ const ListEquipment = props => {
     }
 
     const getEquipments = (equipments) => {
+        setIsLoading(true)
         setEquipments(equipments)
+        setIsLoading(false)
     }
 
     return (
