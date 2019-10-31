@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux'
-import equipment from './equipment'
+import { equipments, equipmentById, checkpointsByIdEquipment } from './data'
 
 export default combineReducers({
-    equipment
+    equipments,
+    equipmentById,
+    checkpointsByIdEquipment
 })

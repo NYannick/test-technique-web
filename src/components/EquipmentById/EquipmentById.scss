@@ -33,4 +33,8 @@
 .container-btn-data {
     display: flex;
     flex-direction: column;
+    .link-back {
+        text-decoration: none;
+        display: contents;
+    }
 }

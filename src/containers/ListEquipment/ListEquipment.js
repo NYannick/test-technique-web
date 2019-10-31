@@ -19,7 +19,11 @@ const useStyles = makeStyles((theme: Theme) =>
             margin: theme.spacing(2)
         },
         head: {
-            fontWeight: 600
+            fontWeight: 600,
+            position: 'sticky',
+            top: 0,
+            zIndex: 1,
+            background: 'white'
         }
     })
 )
@@ -38,11 +42,11 @@ const ListEquipment = props => {
     }, [])
 
     useEffect(() => {
-        setEquipments(props.equipment.Equipments)
+        setEquipments(props.equipments)
         return () => {
             setIsLoading(false)
         }
-    }, [props.equipment])
+    }, [props.equipments])
 
     const renderBodyEquipement = () => {
         const data = _.map(equipments, (equipment, key) => {
@@ -71,7 +75,7 @@ const ListEquipment = props => {
 
     return (
         <div>
-            <SearchEquipment equipments={props.equipment.Equipments} getEquipments={getEquipments} />
+            <SearchEquipment equipments={props.equipments} getEquipments={getEquipments} />
             <Table>
                 <TableHead>
                     <TableRow>
@@ -89,9 +93,9 @@ const ListEquipment = props => {
     )
 }
 
-const mapStateToProps = ({ equipment }) => {
+const mapStateToProps = ({ equipments }) => {
     return {
-        equipment
+        equipments
     }
 }
 

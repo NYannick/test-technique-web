@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
             margin: theme.spacing(2)
         },
         button: {
-            margin: theme.spacing(1)
+            marginBottom: theme.spacing(1)
         },
         card: {
             marginRight: 10
@@ -29,8 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const EquipmentById = props => {
     let { id } = useParams()
-    const { equipment } = props
-    const [equipments, setEquipments] = useState([])
+    const [equipment, setEquipment] = useState([])
     const [checkpoints, setCheckpoints] = useState([])
     const [isLoading, setIsLoading] = useState(false)
 
@@ -38,59 +37,62 @@ const EquipmentById = props => {
 
     useEffect(() => {
         setIsLoading(true)
-        props.fetchEquipments()
+        // if (Object.entries(props.equipments).length === 0 && props.equipments.constructor === Object) {
+            props.fetchEquipmentById(id)
+            props.fetchCheckpointsByIdEquipment(id)
+        // }
     }, [])
 
     useEffect(() => {
-        setEquipments(equipment.Equipments)
-        setCheckpoints(equipment.Checkpoints)
+        setEquipment(props.equipmentById)
+    }, [equipment])
+
+    useEffect(() => {
+        setCheckpoints(props.checkpointsByIdEquipment)
         return () => {
             setIsLoading(false)
         }
-    }, [equipment])
+    }, [checkpoints])
 
     const renderEquipment = () => {
-        const dataCheckpoint = _.filter(checkpoints, checkpoint => checkpoint.equipmentKey === id)
-        const dataEquipment = _.map(equipments, (equipment, key) => {
-            if (id === key) {
-                return (
-                    <Card key={key}>
-                        <div className="container">
-                            <div className="img-container"><SimpleImg src={equipment.photo} height={400} className="img-beeldi-detail" /></div>
-                            <div className="text-container">
-                                <p><span className="bold">Nom de l'équipement: </span>{equipment.name}</p>
-                                <p><span className="bold">Domaine technique: </span>{equipment.domain}</p>
-                                <p><span className="bold">Nombre de défauts sur l'équipement: </span>{equipment.nbFaults}</p>
-                                <p><span className="bold">Marque: </span>{equipment.brand}</p>
-                                <p><span className="bold">Modèle: </span>{equipment.model}</p>
-                                <p><span className="bold">Dernier statut constaté: </span>{equipment.status}</p>
-                                <p className="p-flex-column"><span className="bold marginBottom">Prise de notes: </span><span>{equipment.notes}</span></p>
-                                <div className="container-img-beeldi-min">
-                                    {
-                                        dataCheckpoint.map((checkpoint, key) => checkpoint.photo ? <Tooltip title={checkpoint.name ? checkpoint.name : null} key={key}><Card classes={{ root: classes.card }}><SimpleImg src={checkpoint.photo} height={105} className="img-beeldi-min" /></Card></Tooltip> : null)
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                    </Card>
-                )
-            }
-        })
         return (
             <div className="container-btn-data">
-                <Button
-                    variant="contained"
-                    className={classes.button}
-                    startIcon={<ArrowBack />}
-                >
-                    <Link to="/">Retour</Link>
-                </Button>
+                <Link to="/" className="link-back">
+                    <Button
+                        variant="contained"
+                        className={classes.button}
+                        startIcon={<ArrowBack />}
+                    >
+                        Retour
+                    </Button>
+                </Link>
                 {
                     isLoading
                         ? <CircularProgress className={classes.progress} />
-                        : !_.isEmpty(dataEquipment)
-                            ? dataEquipment
-                            : <h4>No equipment available</h4>
+                        : !_.isEmpty(props.equipmentById)
+                            ? (
+                                <Card>
+                                    <div className="container">
+                                        <div className="img-container"><SimpleImg src={props.equipmentById.photo} height={400} className="img-beeldi-detail" /></div>
+                                        <div className="text-container">
+                                            <p><span className="bold">Nom de l'équipement: </span>{props.equipmentById.name}</p>
+                                            <p><span className="bold">Domaine technique: </span>{props.equipmentById.domain}</p>
+                                            <p><span className="bold">Nombre de défauts sur l'équipement: </span>{props.equipmentById.nbFaults}</p>
+                                            <p><span className="bold">Marque: </span>{props.equipmentById.brand}</p>
+                                            <p><span className="bold">Modèle: </span>{props.equipmentById.model}</p>
+                                            <p><span className="bold">Dernier statut constaté: </span>{props.equipmentById.status}</p>
+                                            <p className="p-flex-column"><span className="bold marginBottom">Prise de notes: </span><span>{props.equipmentById.notes}</span></p>
+                                            <div className="container-img-beeldi-min">
+                                                {
+                                                    !_.isEmpty(props.checkpointsByIdEquipment)
+                                                        ? _.map(checkpoints, (checkpoint, key) => checkpoint.photo ? <Tooltip title={checkpoint.name ? checkpoint.name : null} key={key}><Card classes={{ root: classes.card }}><SimpleImg src={checkpoint.photo} height={105} className="img-beeldi-min" /></Card></Tooltip> : null)
+                                                        : <h4>No checkpoints available</h4>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Card>
+                            ) : <h4>No equipment available</h4>
                 }
             </div>
         )
@@ -99,9 +101,10 @@ const EquipmentById = props => {
     return renderEquipment()
 }
 
-const mapStateToProps = ({ equipment }) => {
+const mapStateToProps = ({ equipmentById, checkpointsByIdEquipment }) => {
     return {
-        equipment
+        equipmentById,
+        checkpointsByIdEquipment
     }
 }
 

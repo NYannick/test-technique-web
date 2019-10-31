@@ -15,7 +15,7 @@ const useStyles = makeStyles(() =>
             alignItems: 'center',
             width: '30%',
             marginRight: 24,
-            marginLeft: 24
+            marginBottom: 24
         },
         input: {
             marginLeft: 8,
