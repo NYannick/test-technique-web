@@ -2,6 +2,7 @@ import React from 'react'
 import TableCell from '@material-ui/core/TableCell'
 import TableRow from '@material-ui/core/TableRow'
 import { useHistory } from 'react-router-dom'
+import { SimpleImg } from 'react-simple-img'
 import './ItemEquipment.scss'
 
 const ItemEquipment = props => {
@@ -11,7 +12,7 @@ const ItemEquipment = props => {
             <TableCell>{props.name}</TableCell>
             <TableCell>{props.domain}</TableCell>
             <TableCell>{props.nbFaults}</TableCell>
-            <TableCell><img src={props.photo} alt="img beeldi" className="img-beeldi" /></TableCell>
+            <TableCell><SimpleImg height={200} src={props.photo} className="img-beeldi" /></TableCell>
         </TableRow>
     )
 }

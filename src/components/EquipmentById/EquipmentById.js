@@ -10,6 +10,7 @@ import _ from 'lodash'
 import Button from '@material-ui/core/Button'
 import { Link } from 'react-router-dom'
 import Tooltip from '@material-ui/core/Tooltip'
+import { SimpleImg } from 'react-simple-img'
 import './EquipmentById.scss'
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -55,7 +56,7 @@ const EquipmentById = props => {
                 return (
                     <Card key={key}>
                         <div className="container">
-                            <div className="img-container"><img src={equipment.photo} alt="img beeldi" className="img-beeldi-detail" /></div>
+                            <div className="img-container"><SimpleImg src={equipment.photo} height={400} className="img-beeldi-detail" /></div>
                             <div className="text-container">
                                 <p><span className="bold">Nom de l'équipement: </span>{equipment.name}</p>
                                 <p><span className="bold">Domaine technique: </span>{equipment.domain}</p>
@@ -66,7 +67,7 @@ const EquipmentById = props => {
                                 <p className="p-flex-column"><span className="bold marginBottom">Prise de notes: </span><span>{equipment.notes}</span></p>
                                 <div className="container-img-beeldi-min">
                                     {
-                                        dataCheckpoint.map((checkpoint, key) => checkpoint.photo ? <Tooltip title={checkpoint.name ? checkpoint.name : null} key={key}><Card classes={{ root: classes.card }}><img src={checkpoint.photo} alt="img-beeldi-checkpoint" className="img-beeldi-min" /></Card></Tooltip> : null)
+                                        dataCheckpoint.map((checkpoint, key) => checkpoint.photo ? <Tooltip title={checkpoint.name ? checkpoint.name : null} key={key}><Card classes={{ root: classes.card }}><SimpleImg src={checkpoint.photo} height={105} className="img-beeldi-min" /></Card></Tooltip> : null)
                                     }
                                 </div>
                             </div>
