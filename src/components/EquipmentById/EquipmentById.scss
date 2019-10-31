@@ -1,5 +1,6 @@
 .container {
     display: flex;
+    padding: 20px;
     .img-beeldi-detail {
         width: 300px;
     }
@@ -19,6 +20,13 @@
     .img-container {
         display: flex;
         align-items: center;
+    }
+    .container-img-beeldi-min {
+        display: flex;
+        .img-beeldi-min {
+            width: 80px;
+            display: flex;
+        }
     }
 }
 

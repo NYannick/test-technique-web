@@ -9,6 +9,7 @@ import ArrowBack from '@material-ui/icons/ArrowBack';
 import _ from 'lodash'
 import Button from '@material-ui/core/Button'
 import { Link } from 'react-router-dom'
+import Tooltip from '@material-ui/core/Tooltip'
 import './EquipmentById.scss'
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -18,6 +19,9 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         button: {
             margin: theme.spacing(1)
+        },
+        card: {
+            marginRight: 10
         }
     })
 )
@@ -26,6 +30,7 @@ const EquipmentById = props => {
     let { id } = useParams()
     const { equipment } = props
     const [equipments, setEquipments] = useState([])
+    const [checkpoints, setCheckpoints] = useState([])
     const [isLoading, setIsLoading] = useState(false)
 
     const classes = useStyles()
@@ -37,13 +42,15 @@ const EquipmentById = props => {
 
     useEffect(() => {
         setEquipments(equipment.Equipments)
+        setCheckpoints(equipment.Checkpoints)
         return () => {
             setIsLoading(false)
         }
     }, [equipment])
 
     const renderEquipment = () => {
-        const data = _.map(equipments, (equipment, key) => {
+        const dataCheckpoint = _.filter(checkpoints, checkpoint => checkpoint.equipmentKey === id)
+        const dataEquipment = _.map(equipments, (equipment, key) => {
             if (id === key) {
                 return (
                     <Card key={key}>
@@ -57,6 +64,11 @@ const EquipmentById = props => {
                                 <p><span className="bold">Modèle: </span>{equipment.model}</p>
                                 <p><span className="bold">Dernier statut constaté: </span>{equipment.status}</p>
                                 <p className="p-flex-column"><span className="bold marginBottom">Prise de notes: </span><span>{equipment.notes}</span></p>
+                                <div className="container-img-beeldi-min">
+                                    {
+                                        dataCheckpoint.map((checkpoint, key) => checkpoint.photo ? <Tooltip title={checkpoint.name ? checkpoint.name : null} key={key}><Card classes={{ root: classes.card }}><img src={checkpoint.photo} alt="img-beeldi-checkpoint" className="img-beeldi-min" /></Card></Tooltip> : null)
+                                    }
+                                </div>
                             </div>
                         </div>
                     </Card>
@@ -75,8 +87,8 @@ const EquipmentById = props => {
                 {
                     isLoading
                         ? <CircularProgress className={classes.progress} />
-                        : !_.isEmpty(data)
-                            ? data
+                        : !_.isEmpty(dataEquipment)
+                            ? dataEquipment
                             : <h4>No equipment available</h4>
                 }
             </div>
