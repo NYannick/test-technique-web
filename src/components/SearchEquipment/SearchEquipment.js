@@ -38,15 +38,19 @@ const SearchEquipment = props => {
 
         clearTimeout(search)
         const match = e.target.value
+        const filtered = {}
         search = setTimeout(() => {
-            const data = _.filter(props.equipments, (item, key) => {
+            _.filter(props.equipments, (item, key) => {
                 return Object.entries(item).filter(value => {
                     return value[0] === 'domain' || value[0] === 'name'
                 }).find(value => {
-                    return String(value[1]).toLowerCase().includes(match)
+                    if (String(value[1]).toLowerCase().includes(match)) {
+                        return Object.assign(filtered, { [key]: item })
+                    }
+                    return false
                 })
             })
-            props.getEquipments(match !== '' ? data : props.equipments)
+            props.getEquipments(match !== '' ? filtered : props.equipments)
         }, 1000)
     }
     const classes = useStyles()
