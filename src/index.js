@@ -9,7 +9,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import EquipmentById from './components/EquipmentById/EquipmentById'
+import EquipmentById from './containers/EquipmentById/EquipmentById'
 
 const store = createStore(
     reducers,

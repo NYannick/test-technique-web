@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom'
 import Tooltip from '@material-ui/core/Tooltip'
 import { SimpleImg } from 'react-simple-img'
 import './EquipmentById.scss'
+import ModalCheckpoint from '../../components/ModalCheckpoint/ModalCheckpoint'
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -22,7 +23,8 @@ const useStyles = makeStyles((theme: Theme) =>
             marginBottom: theme.spacing(1)
         },
         card: {
-            marginRight: 10
+            marginRight: 10,
+            cursor: 'pointer'
         }
     })
 )
@@ -31,6 +33,8 @@ const EquipmentById = props => {
     let { id } = useParams()
     const [equipment, setEquipment] = useState([])
     const [checkpoints, setCheckpoints] = useState([])
+    const [checkpointDetails, setCheckpointDetails] = useState([])
+    const [open, setOpen] = useState(false)
 
     const classes = useStyles()
 
@@ -53,10 +57,17 @@ const EquipmentById = props => {
 
     const renderCheckpoints = () => {
         if (!_.isEmpty(props.checkpointsByIdEquipment)) {
-            return _.map(props.checkpointsByIdEquipment, (checkpoint, key) => checkpoint.photo ? <Tooltip title={checkpoint.name ? checkpoint.name : null} key={key}><Card classes={{ root: classes.card }}><SimpleImg src={checkpoint.photo} height={105} className="img-beeldi-min" /></Card></Tooltip> : null)
+            return _.map(props.checkpointsByIdEquipment, (checkpoint, key) => checkpoint.photo ? <Tooltip title={checkpoint.name ? checkpoint.name : null} key={key}><Card classes={{ root: classes.card }} onClick={() => modalCheckpoint(checkpoint)}><SimpleImg src={checkpoint.photo} height={105} className="img-beeldi-min" /></Card></Tooltip> : null)
         }
         return <h4>No checkpoint(s) available</h4>
     }
+
+    const modalCheckpoint = checkpoint => {
+        setOpen(true)
+        setCheckpointDetails(checkpoint)
+    }
+
+    const handleClose = () => setOpen(false)
 
     return (
         <div className="container-btn-data">
@@ -91,6 +102,7 @@ const EquipmentById = props => {
                         </Card>
                     ) : <CircularProgress className={classes.progress} />
             }
+            <ModalCheckpoint checkpoint={checkpointDetails} open={open} handleClose={handleClose} />
         </div>
     )
 }
