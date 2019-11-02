@@ -64,7 +64,7 @@ const ListEquipment = props => {
         if (!_.isEmpty(data)) {
             return data
         }
-        return <TableRow><TableCell>{isLoading ? <CircularProgress className={classes.progress} /> : <h4>No equipments</h4>}</TableCell></TableRow>
+        return <TableRow><TableCell>{isLoading ? <CircularProgress className={classes.progress} /> : <h4>No equipment(s)</h4>}</TableCell></TableRow>
     }
 
     const getEquipments = (equipments) => {

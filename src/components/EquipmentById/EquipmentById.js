@@ -44,15 +44,15 @@ const EquipmentById = props => {
     }, [])
 
     useEffect(() => {
-        setEquipment(props.equipmentById)
-    }, [equipment])
+        setCheckpoints(props.checkpointsByIdEquipment)
+    }, [checkpoints])
 
     useEffect(() => {
-        setCheckpoints(props.checkpointsByIdEquipment)
+        setEquipment(props.equipmentById)
         return () => {
             setIsLoading(false)
         }
-    }, [checkpoints])
+    }, [equipment])
 
     const renderEquipment = () => {
         return (
@@ -86,7 +86,7 @@ const EquipmentById = props => {
                                                 {
                                                     !_.isEmpty(props.checkpointsByIdEquipment)
                                                         ? _.map(checkpoints, (checkpoint, key) => checkpoint.photo ? <Tooltip title={checkpoint.name ? checkpoint.name : null} key={key}><Card classes={{ root: classes.card }}><SimpleImg src={checkpoint.photo} height={105} className="img-beeldi-min" /></Card></Tooltip> : null)
-                                                        : <h4>No checkpoints available</h4>
+                                                        : <h4>No checkpoint(s) available</h4>
                                                 }
                                             </div>
                                         </div>

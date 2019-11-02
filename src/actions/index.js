@@ -6,11 +6,15 @@ export const FETCH_EQUIPMENT_BY_ID = 'FETCH_EQUIPMENT_BY_ID'
 export const FETCH_CHECKPOINTS_BY_ID_EQUIPMENT = 'FETCH_CHECKPOINTS_BY_ID_EQUIPMENT'
 
 export const fetchEquipments = () => async dispatch => {
-    const equipment = database.ref('Equipments')
+    const equipment = database.ref('Equipments').orderByChild('name')
+    const orderByName = {}
     equipment.on('value', snapshot => {
+        snapshot.forEach(child => {
+            Object.assign(orderByName, { [child.key]: child.val() })
+        })
         dispatch({
             type: FETCH_EQUIPMENTS,
-            payload: snapshot.val()
+            payload: orderByName
         })
     })
 }

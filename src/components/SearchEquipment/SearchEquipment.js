@@ -37,7 +37,7 @@ const SearchEquipment = props => {
         e.stopPropagation()
 
         clearTimeout(search)
-        const match = e.target.value
+        const match = e.target.value.toLowerCase()
         const filtered = {}
         search = setTimeout(() => {
             _.filter(props.equipments, (item, key) => {
