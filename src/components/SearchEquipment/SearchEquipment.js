@@ -13,7 +13,7 @@ const useStyles = makeStyles(() =>
             padding: '2px 4px',
             display: 'flex',
             alignItems: 'center',
-            width: '30%',
+            width: 300,
             marginRight: 24,
             marginBottom: 24
         },
@@ -50,13 +50,13 @@ const SearchEquipment = props => {
                     return false
                 })
             })
-            props.getEquipments(match !== '' ? filtered : props.equipments)
+            props.getEquipments(match !== '' ? filtered : props.equipments, match !== '' ? true : false)
         }, 1000)
     }
     const classes = useStyles()
     return (
         <Paper className={classes.root} elevation={1}>
-            <InputBase className={classes.input} placeholder="Search..." onChange={searchValue} />
+            <InputBase className={classes.input} placeholder="Search..." onChange={searchValue} disabled={props.disabled} />
             <Divider className={classes.divider} />
             <IconButton className={classes.iconButton} aria-label="Search">
                 <SearchIcon />

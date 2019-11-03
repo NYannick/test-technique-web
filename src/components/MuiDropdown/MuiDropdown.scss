@@ -1,0 +1,38 @@
+.dropdown-mui {
+    width: 100%;
+    cursor: pointer;
+    position: relative;
+
+    &:first-child {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+}
+
+.dropdown-mui-child {
+    color: hsl(0,0%,20%);
+    margin-left: 2px;
+    margin-right: 2px;
+    max-width: calc(100% - 8px);
+    overflow: hidden;
+    position: absolute;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    box-sizing: border-box;
+}
+
+.overflowText {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    color: black;
+}
+
+.colorInput, .colorLabel {
+    color: white;
+}
