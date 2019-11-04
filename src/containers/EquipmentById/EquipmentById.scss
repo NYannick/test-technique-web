@@ -23,6 +23,7 @@
     }
     .container-img-beeldi-min {
         display: flex;
+        flex-wrap: wrap;
         .img-beeldi-min {
             width: 80px;
             display: flex;

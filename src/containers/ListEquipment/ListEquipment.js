@@ -137,20 +137,22 @@ const ListEquipment = props => {
                     disabled={disabledDropDown}
                 />
             </div>
-            <Table>
-                <TableHead>
-                    <TableRow>
-                        <TableCell classes={{ head: classes.head }}>{title.name}</TableCell>
-                        <TableCell classes={{ head: classes.head }}>{title.domain}</TableCell>
-                        <TableCell classes={{ head: classes.head }}>{title.brand}</TableCell>
-                        <TableCell classes={{ head: classes.head }}>{title.nbFaults}</TableCell>
-                        <TableCell classes={{ head: classes.head }}>{title.photo}</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {renderBodyEquipement()}
-                </TableBody>
-            </Table>
+            <div className="table-overflow">
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell classes={{ head: classes.head }}>{title.name}</TableCell>
+                            <TableCell classes={{ head: classes.head }}>{title.domain}</TableCell>
+                            <TableCell classes={{ head: classes.head }}>{title.brand}</TableCell>
+                            <TableCell classes={{ head: classes.head }}>{title.nbFaults}</TableCell>
+                            <TableCell classes={{ head: classes.head }}>{title.photo}</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {renderBodyEquipement()}
+                    </TableBody>
+                </Table>
+            </div>
         </div>
     )
 }

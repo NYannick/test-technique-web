@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         card: {
             marginRight: 10,
+            marginBottom: 10,
             cursor: 'pointer'
         }
     })
